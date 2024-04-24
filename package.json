@@ -1,0 +1,20 @@
+{
+  "name": "medvault-backend",
+  "version": "1.0.0",
+  "description": "MedVault Backend is an Express.js-powered backend application serving as the robust foundation for MedVault, a comprehensive healthcare management system. With RESTful APIs and secure data handling, MedVault Backend seamlessly integrates with the frontend to provide doctors with fast and reliable access to patient information.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
