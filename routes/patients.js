@@ -38,8 +38,7 @@ router.post(
       .isLength({ min: 10 }),
     body('emailAddress')
       .optional()
-      .trim()
-      .isEmail(),
+      .trim(),
 
     // Validations for Next of Keen Details
     body('keenFirstName')
