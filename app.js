@@ -18,6 +18,13 @@ app.use((req, res, next) => {
 
 app.use('/patients', patientsRoutes);
 
+app.use((error, req, res, next) => {
+  console.log(error);
+  const status = error.statusCode || 500;
+  const message = error.message;
+  res.status(status).json({ message: message });
+});
+
 mongoose
   .connect(
     'mongodb+srv://takudzwamusinga:Takudzwa95!@cluster0.wiqnt9z.mongodb.net/medvault?retryWrites=true&w=majority&appName=Cluster0'

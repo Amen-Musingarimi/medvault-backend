@@ -85,4 +85,6 @@ router.post(
   patientsController.createPatient
 );
 
+router.get('patient/:patientId', patientsController.getPatient);
+
 module.exports = router;

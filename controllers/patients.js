@@ -2,9 +2,18 @@ const { validationResult } = require('express-validator');
 const Patient = require('../models/patient');
 
 exports.getPatients = (req, res, next) => {
-  res
-    .status(200)
-    .json({ patients: [{ name: 'Mufaro', id_number: '45-209926Y22' }] });
+  Patient.find()
+    .then((patients) => {
+      res
+        .status(200)
+        .json({ message: 'Patients fetched successfully', patients: patients });
+    })
+    .catch((err) => {
+      if (!err.statusCode) {
+        err.statusCode = 500;
+      }
+      next(err);
+    });
 };
 
 // Controller function to handle the creation of a patient
@@ -13,10 +22,9 @@ exports.createPatient = (req, res, next) => {
 
   // !errors.isEmpty means that we have errors
   if (!errors.isEmpty()) {
-    return res.status(422).json({
-      message: 'Validation failed. Entered data is inorrect.',
-      errors: errors.array(),
-    });
+    const error = new Error('Validation failed. Entered data is inorrect.');
+    error.statusCode = 422;
+    throw error;
   }
 
   const {
@@ -82,6 +90,28 @@ exports.createPatient = (req, res, next) => {
       });
     })
     .catch((err) => {
-      console.log(err);
+      if (!err.statusCode) {
+        err.statusCode = 500;
+      }
+      next(err);
+    });
+};
+
+exports.getPatient = (req, res, next) => {
+  const patientId = req.params.patientId;
+  Patient.findById(patientId)
+    .then((patient) => {
+      if (!patient) {
+        const error = new Error('Could not find patient.');
+        error.statusCode = 404;
+        throw error;
+      }
+      res.status(200).json({ message: 'Patient fetched.', patient: patient });
+    })
+    .catch((err) => {
+      if (!err.statusCode) {
+        err.statusCode = 500;
+      }
+      next(err);
     });
 };
