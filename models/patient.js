@@ -15,8 +15,6 @@ const patientSchema = new Schema(
       type: String,
       required: true,
       unique: true,
-      minlength: 12,
-      maxlength: 12,
     },
     dateOfBirth: {
       type: Date,
@@ -30,7 +28,6 @@ const patientSchema = new Schema(
     phoneNumber: {
       type: String,
       required: true,
-      minlength: 10,
     },
     emailAddress: String,
     residentialAddress: {
@@ -52,7 +49,6 @@ const patientSchema = new Schema(
     keenPhoneNumber: {
       type: String,
       required: true,
-      minlength: 10,
     },
     medicalConditions: String,
     allergies: String,

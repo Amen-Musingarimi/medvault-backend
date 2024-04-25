@@ -1,4 +1,5 @@
 const { validationResult } = require('express-validator');
+const Patient = require('../models/patient');
 
 exports.getPatients = (req, res, next) => {
   res
@@ -43,32 +44,44 @@ exports.createPatient = (req, res, next) => {
     memberContactNumber,
   } = req.body;
 
-  res.status(201).json({
-    message: 'Patient created successfully!',
-    patient: {
-      id: new Date().toISOString(),
-      patientFirstName: firstName,
-      patientLastName: lastName,
-      nationalId: idNumber,
-      dateOfBirth: dateOfBirth,
-      gender: gender,
-      phoneNumber: phoneNumber,
-      emailAddress: emailAddress,
-      residentialAddress: residentialAddress,
-      keenFirstName: keenFirstName,
-      keenLastName: keenLastName,
-      keenRelationship: keenRelationship,
-      keenPhoneNumber: keenPhoneNumber,
-      medicalConditions: medicalConditions,
-      allergies: allergies,
-      disability: disability,
-      familyMedicalHistory: familyMedicalHistory,
-      surgicalHistory: surgicalHistory,
-      immunizationStatus: immunizationStatus,
-      medicalAidSociety: medicalAidSociety,
-      policyHolderName: policyHolderName,
-      policyNumber: policyNumber,
-      memberContactNumber: memberContactNumber,
-    },
+  console.log(idNumber, lastName, firstName);
+
+  const patient = new Patient({
+    firstName: firstName,
+    lastName: lastName,
+    idNumber: idNumber,
+    dateOfBirth: dateOfBirth,
+    gender: gender,
+    phoneNumber: phoneNumber,
+    emailAddress: emailAddress,
+    residentialAddress: residentialAddress,
+    keenFirstName: keenFirstName,
+    keenLastName: keenLastName,
+    keenRelationship: keenRelationship,
+    keenPhoneNumber: keenPhoneNumber,
+    medicalConditions: medicalConditions,
+    allergies: allergies,
+    disability: disability,
+    familyMedicalHistory: familyMedicalHistory,
+    surgicalHistory: surgicalHistory,
+    immunizationStatus: immunizationStatus,
+    medicalAidSociety: medicalAidSociety,
+    policyHolderName: policyHolderName,
+    policyNumber: policyNumber,
+    memberContactNumber: memberContactNumber,
+    addedBy: { name: 'Amen Musingarimi' },
   });
+
+  patient
+    .save()
+    .then((result) => {
+      console.log(result);
+      res.status(201).json({
+        message: 'Patient created successfully!',
+        patient: result,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
