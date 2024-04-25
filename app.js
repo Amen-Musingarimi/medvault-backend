@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 const patientsRoutes = require('./routes/patients');
 
@@ -17,4 +18,11 @@ app.use((req, res, next) => {
 
 app.use('/patients', patientsRoutes);
 
-app.listen(8080);
+mongoose
+  .connect(
+    'mongodb+srv://takudzwamusinga:Takudzwa95!@cluster0.wiqnt9z.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
+  )
+  .then((result) => {
+    app.listen(8080);
+  })
+  .catch((err) => console.log(err));
