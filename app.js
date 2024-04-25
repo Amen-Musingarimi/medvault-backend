@@ -20,7 +20,7 @@ app.use('/patients', patientsRoutes);
 
 mongoose
   .connect(
-    'mongodb+srv://takudzwamusinga:Takudzwa95!@cluster0.wiqnt9z.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
+    'mongodb+srv://takudzwamusinga:Takudzwa95!@cluster0.wiqnt9z.mongodb.net/medvault?retryWrites=true&w=majority&appName=Cluster0'
   )
   .then((result) => {
     app.listen(8080);
