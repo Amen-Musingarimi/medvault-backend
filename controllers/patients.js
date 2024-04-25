@@ -1,15 +1,23 @@
+const { validationResult } = require('express-validator');
+
 exports.getPatients = (req, res, next) => {
   res
     .status(200)
     .json({ patients: [{ name: 'Mufaro', id_number: '45-209926Y22' }] });
 };
 
-// Import any necessary modules
-// const Patient = require('../models/patient'); // Import your patient model if you have one
-
 // Controller function to handle the creation of a patient
 exports.createPatient = (req, res, next) => {
-  // Extract data from the request body
+  const errors = validationResult(req);
+
+  // !errors.isEmpty means that we have errors
+  if (!errors.isEmpty()) {
+    return res.status(422).json({
+      message: 'Validation failed. Entered data is inorrect.',
+      errors: errors.array(),
+    });
+  }
+
   const {
     firstName,
     lastName,
