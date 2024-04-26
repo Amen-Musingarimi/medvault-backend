@@ -52,8 +52,6 @@ exports.createPatient = (req, res, next) => {
     memberContactNumber,
   } = req.body;
 
-  console.log(idNumber, lastName, firstName);
-
   const patient = new Patient({
     firstName: firstName,
     lastName: lastName,
@@ -99,6 +97,7 @@ exports.createPatient = (req, res, next) => {
 
 exports.getPatient = (req, res, next) => {
   const patientId = req.params.patientId;
+
   Patient.findById(patientId)
     .then((patient) => {
       if (!patient) {
