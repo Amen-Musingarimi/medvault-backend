@@ -114,3 +114,23 @@ exports.getPatient = (req, res, next) => {
       next(err);
     });
 };
+
+exports.searchPatient = (req, res, next) => {
+  const patientNationalId = req.params.idNumber;
+
+  Patient.findOne({ idNumber: patientNationalId })
+    .then((patient) => {
+      if (!patient) {
+        const error = new Error('Could not find patient.');
+        error.statusCode = 404;
+        throw error;
+      }
+      res.status(200).json({ message: 'Patient Found.', patient: patient });
+    })
+    .catch((err) => {
+      if (!err.statusCode) {
+        err.statusCode = 500;
+      }
+      next(err);
+    });
+};

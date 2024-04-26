@@ -87,6 +87,6 @@ router.post(
 
 router.get('/patient/:patientId', patientsController.getPatient);
 
-router.get('/query/:idNumber');
+router.get('/query/:idNumber', patientsController.searchPatient);
 
 module.exports = router;
