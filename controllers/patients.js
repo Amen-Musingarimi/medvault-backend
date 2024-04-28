@@ -52,8 +52,6 @@ exports.createPatient = (req, res, next) => {
     memberContactNumber,
   } = req.body;
 
-  console.log(idNumber, lastName, firstName);
-
   const patient = new Patient({
     firstName: firstName,
     lastName: lastName,
@@ -99,6 +97,7 @@ exports.createPatient = (req, res, next) => {
 
 exports.getPatient = (req, res, next) => {
   const patientId = req.params.patientId;
+
   Patient.findById(patientId)
     .then((patient) => {
       if (!patient) {
@@ -107,6 +106,26 @@ exports.getPatient = (req, res, next) => {
         throw error;
       }
       res.status(200).json({ message: 'Patient fetched.', patient: patient });
+    })
+    .catch((err) => {
+      if (!err.statusCode) {
+        err.statusCode = 500;
+      }
+      next(err);
+    });
+};
+
+exports.searchPatient = (req, res, next) => {
+  const patientNationalId = req.params.idNumber;
+
+  Patient.findOne({ idNumber: patientNationalId })
+    .then((patient) => {
+      if (!patient) {
+        const error = new Error('Could not find patient.');
+        error.statusCode = 404;
+        throw error;
+      }
+      res.status(200).json({ message: 'Patient Found.', patient: patient });
     })
     .catch((err) => {
       if (!err.statusCode) {
