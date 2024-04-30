@@ -8,16 +8,16 @@ const router = express.Router();
 router.post(
   '/post',
   [
-    body('patient').notEmpty(),
+    body('patientId').notEmpty(),
     body('temperature')
       .notEmpty()
-      .isNumeric(),
+      .isString(),
     body('bloodPressure')
       .notEmpty()
       .isString(),
     body('weight')
       .notEmpty()
-      .isNumeric(),
+      .isString(),
     body('reasonForVisit')
       .notEmpty()
       .isString(),
