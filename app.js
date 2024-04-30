@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const patientsRoutes = require('./routes/patients');
+const medicalRecordsRoutes = require('./routes/medicalRecords');
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/patients', patientsRoutes);
+app.use('./medicalRecords', medicalRecordsRoutes);
 
 app.use((error, req, res, next) => {
   console.log(error);
