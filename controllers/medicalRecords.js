@@ -5,8 +5,6 @@ const MedicalRecord = require('../models/medicalRecord');
 exports.createMedicalRecord = (req, res, next) => {
   const errors = validationResult(req);
 
-  console.log(errors);
-
   // !errors.isEmpty means that we have errors
   if (!errors.isEmpty()) {
     const error = new Error('Validation failed. Entered data is inorrect.');
@@ -32,8 +30,6 @@ exports.createMedicalRecord = (req, res, next) => {
     referral,
     checkupDate,
   } = req.body;
-
-  console.log(patient);
 
   const medicalRecord = new MedicalRecord({
     patientId: patient,
