@@ -18,7 +18,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/patients', patientsRoutes);
-app.use('./medicalRecords', medicalRecordsRoutes);
+app.use('/medicalRecords', medicalRecordsRoutes);
 
 app.use((error, req, res, next) => {
   console.log(error);
