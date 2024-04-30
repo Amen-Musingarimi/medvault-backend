@@ -8,7 +8,7 @@ const router = express.Router();
 router.post(
   '/post',
   [
-    body('patientId').notEmpty(),
+    body('patient').notEmpty(),
     body('temperature')
       .notEmpty()
       .isString(),
