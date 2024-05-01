@@ -68,7 +68,7 @@ exports.createMedicalRecord = (req, res, next) => {
 };
 
 // Fetch medical records by patient ID
-exports.getMedicalRecordsByPatientId = async (req, res) => {
+exports.getMedicalRecordsByPatientId = async (req, res, next) => {
   const patientId = req.params.patientId;
 
   MedicalRecord.find({ patientId: patientId })
@@ -78,12 +78,10 @@ exports.getMedicalRecordsByPatientId = async (req, res) => {
         error.statusCode = 404;
         throw error;
       }
-      res
-        .status(200)
-        .json({
-          message: 'Medical Record Fetched!',
-          medicalRecord: medicalRecord,
-        });
+      res.status(200).json({
+        message: 'Medical Record Fetched!',
+        medicalRecord: medicalRecord,
+      });
     })
     .catch((err) => {
       if (!err.statusCode) {
