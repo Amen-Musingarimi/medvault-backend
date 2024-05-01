@@ -69,11 +69,26 @@ exports.createMedicalRecord = (req, res, next) => {
 
 // Fetch medical records by patient ID
 exports.getMedicalRecordsByPatientId = async (req, res) => {
-  try {
-    const patientId = req.params.patientId;
-    const medicalRecords = await MedicalRecord.find({ patient: patientId });
-    res.status(200).json({ data: medicalRecords });
-  } catch (error) {
-    res.status(500).json({ error: 'Internal server error' });
-  }
+  const patientId = req.params.patientId;
+
+  MedicalRecord.find({ patientId: patientId })
+    .then((medicalRecord) => {
+      if (!medicalRecord) {
+        const error = new Error('Could not find Medical record.');
+        error.statusCode = 404;
+        throw error;
+      }
+      res
+        .status(200)
+        .json({
+          message: 'Medical Record Fetched!',
+          medicalRecord: medicalRecord,
+        });
+    })
+    .catch((err) => {
+      if (!err.statusCode) {
+        err.statusCode = 500;
+      }
+      next(err);
+    });
 };
