@@ -14,15 +14,6 @@ const patientSchema = new Schema(
       type: Date,
       required: true,
     },
-    gender: {
-      type: String,
-      required: true,
-      enum: ['male', 'female', 'other'],
-    },
-    phoneNumber: {
-      type: String,
-      required: true,
-    },
     residentialAddress: {
       type: String,
       required: true,
