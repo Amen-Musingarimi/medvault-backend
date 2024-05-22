@@ -1,5 +1,7 @@
 const { validationResult } = require('express-validator');
 const Patient = require('../models/patient');
+const crypto = require('crypto');
+const bcrypt = require('bcryptjs');
 
 exports.getPatients = (req, res, next) => {
   Patient.find()
@@ -17,7 +19,7 @@ exports.getPatients = (req, res, next) => {
 };
 
 // Controller function to handle the creation of a patient
-exports.createPatient = (req, res, next) => {
+exports.createPatient = async (req, res, next) => {
   const errors = validationResult(req);
 
   // !errors.isEmpty means that we have errors
@@ -52,9 +54,14 @@ exports.createPatient = (req, res, next) => {
     memberContactNumber,
   } = req.body;
 
+  const temporaryPassword = crypto.randomBytes(8).toString('hex');
+  const hashedPassword = await bcrypt.hash(temporaryPassword, 10);
+
   const patient = new Patient({
     firstName: firstName,
     lastName: lastName,
+    password: hashedPassword,
+    role: 'patient',
     idNumber: idNumber,
     dateOfBirth: dateOfBirth,
     gender: gender,
