@@ -85,14 +85,21 @@ exports.createPatient = async (req, res, next) => {
     addedBy: { name: 'Amen Musingarimi' },
   });
 
-  patient
-    .save()
-    .then((result) => {
-      console.log(result);
-      res.status(201).json({
-        message: 'Patient created successfully!',
-        patient: result,
-      });
+  Patient.findOne({ idNumber: idNumber })
+    .then((existingPatient) => {
+      if (!existingPatient) {
+        patient.save().then((result) => {
+          console.log(result);
+          res.status(201).json({
+            message: 'Patient created successfully!',
+            patient: result,
+          });
+        });
+      } else {
+        const error = new Error('Patient with this ID number already exists.');
+        error.statusCode = 409;
+        throw error;
+      }
     })
     .catch((err) => {
       if (!err.statusCode) {
