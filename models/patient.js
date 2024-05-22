@@ -1,16 +1,10 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const User = require('./user');
+
 const patientSchema = new Schema(
   {
-    firstName: {
-      type: String,
-      required: true,
-    },
-    lastName: {
-      type: String,
-      required: true,
-    },
     idNumber: {
       type: String,
       required: true,
@@ -20,16 +14,6 @@ const patientSchema = new Schema(
       type: Date,
       required: true,
     },
-    gender: {
-      type: String,
-      required: true,
-      enum: ['male', 'female', 'other'],
-    },
-    phoneNumber: {
-      type: String,
-      required: true,
-    },
-    emailAddress: String,
     residentialAddress: {
       type: String,
       required: true,
@@ -71,4 +55,6 @@ const patientSchema = new Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model('Patient', patientSchema);
+const Patient = User.discriminator('patient', patientSchema);
+
+module.exports = Patient;
