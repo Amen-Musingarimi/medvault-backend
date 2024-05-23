@@ -26,7 +26,12 @@ const doctorSchema = new Schema(
         'Pulmonologist',
       ],
     },
-    phoneNumber: {
+    medicalLicenseNumber: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    hospital: {
       type: String,
       required: true,
     },

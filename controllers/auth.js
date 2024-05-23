@@ -14,14 +14,12 @@ exports.signup = (req, res, next) => {
   const {
     firstName,
     lastName,
-    gender,
-    dateOfBirth,
-    medicalLicenseNumber,
-    yearsOfExperience,
-    specialization,
-    hospital,
-    email,
-    phoneNumber,
+    emailAddress,
     password,
+    gender,
+    phoneNumber,
+    specialization,
+    medicalLicenseNumber,
+    hospital,
   } = req.body;
 };

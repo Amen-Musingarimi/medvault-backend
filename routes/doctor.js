@@ -15,12 +15,20 @@ router.put(
     body('lastName')
       .isString()
       .notEmpty(),
-
+    body('emailAddress')
+      .isEmail()
+      .notEmpty(),
+    body('password')
+      .trim()
+      .isLength({ min: 5 }),
     body('gender')
       .isString()
       .notEmpty(),
-    body('dateOfBirth')
-      .isDate()
+    body('phoneNumber')
+      .isString()
+      .notEmpty(),
+    body('specialization')
+      .isString()
       .notEmpty(),
     body('medicalLicenseNumber')
       .isString()
@@ -33,38 +41,9 @@ router.put(
           }
         );
       }),
-    body('yearsOfExperience')
-      .isNumeric()
-      .notEmpty(),
-    body('specialization')
-      .isString()
-      .notEmpty(),
     body('hospital')
       .isString()
       .notEmpty(),
-    body('email')
-      .isEmail()
-      .notEmpty()
-      .custom((value, { req }) => {
-        return Doctor.findOne({ email: value }).then((docData) => {
-          if (docData) {
-            return Promise.reject('Email address already exists!');
-          }
-        });
-      }),
-    body('phoneNumber')
-      .isString()
-      .notEmpty()
-      .custom((value, { req }) => {
-        return Doctor.findOne({ phoneNumber: value }).then((docData) => {
-          if (docData) {
-            return Promise.reject('Phone Number already exists!');
-          }
-        });
-      }),
-    body('password')
-      .trim()
-      .isLength({ min: 5 }),
   ],
   authController.signup
 );
